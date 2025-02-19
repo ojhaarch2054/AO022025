@@ -1,0 +1,22 @@
+/*.searchDiv {
+    position: relative;
+    margin-bottom: 1rem;
+}
+.searchIcon {
+    position: absolute;
+    left: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    padding-top: 4%;
+    padding-bottom: 4%;
+}
+.searchInput{
+    padding-left: 30px;
+    width: 75%;
+    margin-left: 20px;
+}*/
+
+.list-item-icon {
+    margin-left: 90px;
+  }

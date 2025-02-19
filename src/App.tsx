@@ -1,12 +1,17 @@
-import {Typography} from '@mui/material';
+import LeftSideBar from "./components/LeftSideBar";
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import AddChartForm from "./components/AddChartForm";
 
 function App() {
   return (
-    <>
-     <Typography variant='h1'>Hello, welcome to my react app.....</Typography>
-      
-    </>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<LeftSideBar />} />
+        <Route path="/add-chart" element={<AddChartForm />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
