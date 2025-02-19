@@ -103,7 +103,6 @@ import {
       },
     ]);
    
-
     //state to add new data when btn clicked
     //const[newSensorData, setNewSensorData] = useState()
   

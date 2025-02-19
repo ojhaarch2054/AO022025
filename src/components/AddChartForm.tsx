@@ -1,7 +1,10 @@
 import { Box, TextField, Autocomplete, Button, Typography, Card, CardContent } from "@mui/material";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AddChartForm = () => {
+     //use useNavigate
+     const navigate = useNavigate();
   //options for autocomplete
   const options = ["Line", "Option 2"];
   //option for colors
@@ -29,12 +32,17 @@ const AddChartForm = () => {
   const [textDescription, setTextDescription] = useState<String>("");
 
   //for axis
-  const [xAxis, setXAxis] = useState();
-  const [yAxis, setYAxis] = useState();
+  const [xAxis, setXAxis] = useState<string>("");
+  const [yAxis, setYAxis] = useState<string>("");
 
   //handle form submission
   const handleSubmit = (e: any) => {
+    if(!inputValue || !inputColorValue || !inputDataSeriesValue || !textDescription || !xAxis || yAxis ){
+        alert("All Fields Are Required")
+    }
     e.preventDefault();
+    console.log("Details Added")
+    navigate("/")
   };
 
   //handle input change for text field
@@ -45,6 +53,10 @@ const AddChartForm = () => {
       [name]: value,
     }));
   };
+  //for cancelClick
+  const cancleClick = () => {
+    console.log("cancel btn clicked..")
+  }
 
   return (
     <Card sx={{ minWidth: 275 }}>
@@ -145,7 +157,7 @@ const AddChartForm = () => {
         />
         {/*cancel btn*/}
         <Box>
-        <Button>Cancel</Button>
+        <Button onClick={cancleClick}>Cancel</Button>
         {/*add btn*/}
         <Button type="submit">ADD CHART</Button>
       </Box>
