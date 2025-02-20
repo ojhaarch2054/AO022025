@@ -92,7 +92,7 @@ function App() {
       <Routes> 
         <Route path="/" element={<LeftSideBar sensorData={sensorData} />} />
         <Route path="/add-chart" element={<AddChartForm />} />
-        <Route path="/chart/:id" element={<ChartView sensorData={sensorData}/>} />
+        <Route path="/chart/:id" element={<ChartView sensorData={sensorData} chartIndex={null}/>} />
       </Routes>
     </Router>
   );

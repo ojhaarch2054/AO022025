@@ -8,16 +8,17 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { useState } from "react";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 
-const ChartView = ({ sensorData }: { sensorData: Sensor[] }) => {
+interface ChartViewProps {
+    sensorData: Sensor[];
+    chartIndex: number | null;
+  }
+const ChartView = ({ sensorData, chartIndex }: ChartViewProps) => {
     //state variable with initial value of null
     //select date will hold current selected date
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
-  //useParams to get the id parameter from the URL
-  const { id } = useParams<{ id: string }>();
-
   //parsing the id parameter to an integer default is 0 if id is not present
-  const chartId = id ? parseInt(id, 10) : 0;
+  const chartId = chartIndex !== null ? chartIndex : 0;
   //getting the sensor data
   //chartId is used as an index to access the specific sensor data from the sensorData array
   const sensor = sensorData[chartId];
