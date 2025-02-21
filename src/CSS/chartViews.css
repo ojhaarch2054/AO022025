@@ -1,0 +1,20 @@
+.styled-div {
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .styled-p {
+    color: #333;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  /*for date*/
+  .right-corner {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000; /* Ensure it is above other elements */
+  }

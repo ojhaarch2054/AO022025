@@ -9,6 +9,7 @@ import {
   Menu,
   MenuItem,
   Toolbar,
+  Dialog
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -18,17 +19,18 @@ import { Sensor } from "../interfaces/sensorData";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import SearchIcon from "@mui/icons-material/Search";
 import "../CSS/leftSideBar.css";
-import { useNavigate } from "react-router-dom";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ChartView from "./ChartView";
+import { useNavigate } from "react-router-dom";
+import AddChartForm from "./AddChartForm";
 
 //define drawerWidth constant
 const drawerWidth = 240;
 
 const LeftSideBar = ({ sensorData }: { sensorData: Sensor[] }) => {
-  //use useNavigate
-  const navigate = useNavigate();
+    //to navigate
+   const navigate = useNavigate()
   //state for chartClick
   const [chartClicked, setChartClicked] = useState(false);
   //state to keep track of the index of the clicked chart
@@ -39,6 +41,8 @@ const LeftSideBar = ({ sensorData }: { sensorData: Sensor[] }) => {
   //state manage the anchor element for the Menu component
   //useful for controlling the position of the Menu component, allowing it to be displayed relative to the specified anchor element
   const [anchorEl, setAnchorEl] = useState(null);
+  //for dialog visibility
+  const [openEditDialog, setOpenEditDialog] = useState(false);
 
   //onClick event for icon
   const handleMoreVertIconClick = (e: any) => {
@@ -50,6 +54,7 @@ const LeftSideBar = ({ sensorData }: { sensorData: Sensor[] }) => {
     e.preventDefault();
     navigate("/add-chart");
   };
+
   //fun to handle the closing of the menu component
   //it closes the Menu by removing the reference to the anchor element
   const handleClose = () => {
@@ -61,9 +66,17 @@ const LeftSideBar = ({ sensorData }: { sensorData: Sensor[] }) => {
     setChartClicked(true);
     //update the clickedChartIndex state with the index of the clicked chart
     setClickedChartIndex(i);
-    console.log("clicked chart index is: " + clickedChartIndex)
+    console.log("clicked chart index is: " + clickedChartIndex);
   };
-
+  
+//handle edit
+const handleEditItem = () => {
+    setOpenEditDialog(true);
+    
+  };
+  const handleCloseEditDialog = () => {
+    setOpenEditDialog(false);
+  };
   return (
     <>
       <Box sx={{ display: "flex" }}>
@@ -136,7 +149,7 @@ const LeftSideBar = ({ sensorData }: { sensorData: Sensor[] }) => {
                     onClose={handleClose}
                   >
                     {/*Edit and delete option */}
-                    <MenuItem onClick={handleClose}>
+                    <MenuItem onClick={handleEditItem}>
                       <ModeEditIcon />
                       Edit
                     </MenuItem>
@@ -174,6 +187,10 @@ const LeftSideBar = ({ sensorData }: { sensorData: Sensor[] }) => {
           </Box>
         )}
       </Box>
+      {/*To show the dialog when the edit menu clicked */}
+      <Dialog open={openEditDialog} onClose={handleCloseEditDialog}>
+        <AddChartForm/>
+      </Dialog>
     </>
   );
 };
