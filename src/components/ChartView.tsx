@@ -5,6 +5,7 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { useState, useEffect } from "react";
 import "../CSS/chartViews.css";
+import { Typography } from "@mui/material";
 
 
 interface ChartViewProps {
@@ -75,6 +76,7 @@ const ChartView = ({ sensorData, chartIndex }: ChartViewProps) => {
 
   return (
     <div>
+        <>
       <div className="right-corner">
         {/*localizationProvider is used to provide the date adapter for the DatePicker component */}
         <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -107,6 +109,8 @@ const ChartView = ({ sensorData, chartIndex }: ChartViewProps) => {
           aspernatur harum cumque? Distinctio.
         </p>
       </div>
+      </>
+      )
     </div>
   );
 };

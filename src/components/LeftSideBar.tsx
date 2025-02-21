@@ -9,7 +9,7 @@ import {
   Menu,
   MenuItem,
   Toolbar,
-  Dialog
+  Dialog,
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -29,8 +29,8 @@ import AddChartForm from "./AddChartForm";
 const drawerWidth = 240;
 
 const LeftSideBar = ({ sensorData }: { sensorData: Sensor[] }) => {
-    //to navigate
-   const navigate = useNavigate()
+  //to navigate
+  const navigate = useNavigate();
   //state for chartClick
   const [chartClicked, setChartClicked] = useState(false);
   //state to keep track of the index of the clicked chart
@@ -68,11 +68,10 @@ const LeftSideBar = ({ sensorData }: { sensorData: Sensor[] }) => {
     setClickedChartIndex(i);
     console.log("clicked chart index is: " + clickedChartIndex);
   };
-  
-//handle edit
-const handleEditItem = () => {
+
+  //handle edit
+  const handleEditItem = () => {
     setOpenEditDialog(true);
-    
   };
   const handleCloseEditDialog = () => {
     setOpenEditDialog(false);
@@ -128,43 +127,49 @@ const handleEditItem = () => {
           </Button>
           {/*For list of sensor data*/}
           <Box>
-            <List>
-              {sensorData.map((sensor, i) => (
-                <ListItem
-                  key={sensor.name}
-                  onClick={() => handleChartClick(i)}
-                  className="listItemss"
-                >
-                  {`Chart ${i + 1670 + 1}`}
-                  <ListItemIcon>
-                    <MoreVertIcon
-                      onClick={handleMoreVertIconClick}
-                      sx={{ marginLeft: 12 }}
-                    />
-                  </ListItemIcon>
-                  {/*menu component to show dropsown menus */}
-                  <Menu
-                    anchorEl={anchorEl}
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}
+            {sensorData.length === 0 ? (
+              <Typography sx={{ textAlign: "center", marginTop: 2 }}>
+                No charts
+              </Typography>
+            ) : (
+              <List>
+                {sensorData.map((sensor, i) => (
+                  <ListItem
+                    key={sensor.name}
+                    onClick={() => handleChartClick(i)}
+                    className="listItemss"
                   >
-                    {/*Edit and delete option */}
-                    <MenuItem onClick={handleEditItem}>
-                      <ModeEditIcon />
-                      Edit
-                    </MenuItem>
-                    <MenuItem onClick={handleClose}>
-                      <DeleteIcon />
-                      Delete
-                    </MenuItem>
-                  </Menu>
-                </ListItem>
-              ))}
-            </List>
+                    {`Chart ${i + 1670 + 1}`}
+                    <ListItemIcon>
+                      <MoreVertIcon
+                        onClick={handleMoreVertIconClick}
+                        sx={{ marginLeft: 12 }}
+                      />
+                    </ListItemIcon>
+                    {/*menu component to show dropdown menus */}
+                    <Menu
+                      anchorEl={anchorEl}
+                      open={Boolean(anchorEl)}
+                      onClose={handleClose}
+                    >
+                      {/*Edit and delete option */}
+                      <MenuItem onClick={handleEditItem}>
+                        <ModeEditIcon />
+                        Edit
+                      </MenuItem>
+                      <MenuItem onClick={handleClose}>
+                        <DeleteIcon />
+                        Delete
+                      </MenuItem>
+                    </Menu>
+                  </ListItem>
+                ))}
+              </List>
+            )}
           </Box>
         </Drawer>
 
-        {chartClicked ? (
+        {chartClicked && sensorData.length > 0 ? (
           //if chartclicked is true it shows the chartView component
           <Box
             component="main"
@@ -173,7 +178,7 @@ const handleEditItem = () => {
             <Toolbar />
             <ChartView sensorData={sensorData} chartIndex={clickedChartIndex} />
           </Box>
-        ) : (
+        ) : sensorData.length > 0 ? (
           //if chartClicked is false
           <Box
             sx={{
@@ -185,12 +190,44 @@ const handleEditItem = () => {
           >
             <Typography variant="h3">Welcome To Logoipsum</Typography>
           </Box>
+        ) : (
+          //if no sensorData is available
+          <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+            width: "100%",
+            padding: 2,
+            boxSizing: "border-box",
+            flexDirection: "column",
+          }}
+        >
+          <Typography
+            variant="h6"
+            sx={{
+              textAlign: "center",
+              color: "gray",
+              marginBottom:4
+            }}
+          >
+            No charts created yet
+          </Typography>
+          <Button
+            variant="contained"
+            onClick={addClickBtn}
+          >
+            + Add Chart
+          </Button>
+        </Box>
         )}
+
+        {/*To show the dialog when the edit menu clicked */}
+        <Dialog open={openEditDialog} onClose={handleCloseEditDialog}>
+          <AddChartForm />
+        </Dialog>
       </Box>
-      {/*To show the dialog when the edit menu clicked */}
-      <Dialog open={openEditDialog} onClose={handleCloseEditDialog}>
-        <AddChartForm/>
-      </Dialog>
     </>
   );
 };
