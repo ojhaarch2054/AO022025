@@ -5,8 +5,6 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { useState, useEffect } from "react";
 import "../CSS/chartViews.css";
-import { Typography } from "@mui/material";
-
 
 interface ChartViewProps {
   sensorData: Sensor[];
@@ -56,8 +54,7 @@ const ChartView = ({ sensorData, chartIndex }: ChartViewProps) => {
         const year = date.getFullYear();
         //return the formatted date
         return `${day}/${month}/${year}`;
-      },
-    )
+      }),
     },
     yAxis: {
       title: {
@@ -73,35 +70,34 @@ const ChartView = ({ sensorData, chartIndex }: ChartViewProps) => {
       },
     ],
   };
-
   return (
-    <div>
-        <>
-      <div className="right-corner">
-        {/*localizationProvider is used to provide the date adapter for the DatePicker component */}
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          {/*datePicker component for selecting a date period */}
-          <DatePicker
-            label="Start Period"
-            value={selectedDate.start}
-            onChange={(newValue) =>
-              setSelectedDate((prev) => ({ ...prev, start: newValue }))
-            }
-            slotProps={{ textField: { variant: "outlined" } }}
-          />
-          <DatePicker
-            label="End Period"
-            value={selectedDate.end}
-            onChange={(newValue) =>
-              setSelectedDate((prev) => ({ ...prev, end: newValue }))
-            }
-            slotProps={{ textField: { variant: "outlined" } }}
-          />
-        </LocalizationProvider>
+      <div className="chart-box">
+        <div className="chart-header">
+          <h2>Chart {chartId + 1671}</h2>
+          <div className="date-picker">
+            {/*localizationProvider is used to provide the date adapter for the DatePicker component */}
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DatePicker
+                label="Period"
+                value={selectedDate.start}
+                onChange={(newValue) =>
+                  setSelectedDate((prev) => ({ ...prev, start: newValue }))
+                }
+              />
+
+              <span> - </span>
+              <DatePicker
+                value={selectedDate.end}
+                onChange={(newValue) =>
+                  setSelectedDate((prev) => ({ ...prev, end: newValue }))
+                }
+              />
+            </LocalizationProvider>
+          </div>
+        
       </div>
       <HighchartsReact highcharts={Highcharts} options={options} />
 
-      <div className="styled-div">
         <p className="styled-p">
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde ea
           inventore dolore voluptas laudantium, maiores odit veritatis soluta
@@ -109,9 +105,6 @@ const ChartView = ({ sensorData, chartIndex }: ChartViewProps) => {
           aspernatur harum cumque? Distinctio.
         </p>
       </div>
-      </>
-      )
-    </div>
   );
 };
 

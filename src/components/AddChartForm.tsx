@@ -75,113 +75,117 @@ const AddChartForm = () => {
   };
 
   return (
-    <Card sx={{ minWidth: 275 }}>
-      <CardContent>
-        <Box
-          component="form"
-          onSubmit={handleSubmit}
-          sx={{ display: "flex", flexDirection: "column", gap: 2 }}
-        >
-          <Typography>Add Chart</Typography>
-          {/*text field for name input */}
-          <TextField
-            placeholder="Name *"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            sx={{ width: 300 }}
-          />
-
-          {/*autocomplete component */}
-          <Autocomplete
-            value={value}
-            onChange={(e: any, newValue: string | null) => {
-              setValue(newValue);
-            }}
-            inputValue={inputValue}
-            onInputChange={(e, newInputValue) => {
-              setInputValue(newInputValue);
-            }}
-            id="controllable-states-demo"
-            options={options}
-            sx={{ width: 300 }}
-            renderInput={(params) => (
-              <TextField {...params} label="Controllable *" />
-            )}
-          />
-
-          {/*autocomplete component for color */}
-          <Autocomplete
-            value={colorValue}
-            onChange={(e: any, newValue: string | null) => {
-              setColorValue(newValue);
-            }}
-            inputValue={inputColorValue}
-            onInputChange={(e, newInputValue) => {
-              setInputColorValue(newInputValue);
-            }}
-            id="color-states-demo"
-            options={colors}
-            sx={{ width: 300 }}
-            renderInput={(params) => <TextField {...params} label="Color *" />}
-          />
-          {/*autocomplete component for dataseries */}
-          <Autocomplete
-            value={dataSeries}
-            onChange={(e: any, newValue: string | null) => {
-              setDataSeries(newValue);
-            }}
-            inputValue={inputDataSeriesValue}
-            onInputChange={(e, newInputValue) => {
-              setInputDataSeriesValue(newInputValue);
-            }}
-            id="color-states-demo"
-            options={dataseriesOption}
-            sx={{ width: 300 }}
-            renderInput={(params) => (
-              <TextField {...params} label="Dataseries *" />
-            )}
-          />
-          {/*input field for axis*/}
-          <Box>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Card sx={{ minWidth: 320, padding: 3, boxShadow: 3 }}>
+        <CardContent>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+          >
+            <Typography>Add Chart</Typography>
+            {/*text field for name input */}
             <TextField
-              id="outlined-controlled"
-              label="X-axis name"
-              value={xAxis}
-              onChange={(e: any) => {
-                setXAxis(e.target.value);
-              }}
-              sx={{ marginRight: 1, width: 149 }}
+              placeholder="Name *"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              sx={{ width: 300 }}
             />
+
+            {/*autocomplete component */}
+            <Autocomplete
+              value={value}
+              onChange={(e: any, newValue: string | null) => {
+                setValue(newValue);
+              }}
+              inputValue={inputValue}
+              onInputChange={(e, newInputValue) => {
+                setInputValue(newInputValue);
+              }}
+              id="controllable-states-demo"
+              options={options}
+              sx={{ width: 300 }}
+              renderInput={(params) => (
+                <TextField {...params} label="Controllable *" />
+              )}
+            />
+
+            {/*autocomplete component for color */}
+            <Autocomplete
+              value={colorValue}
+              onChange={(e: any, newValue: string | null) => {
+                setColorValue(newValue);
+              }}
+              inputValue={inputColorValue}
+              onInputChange={(e, newInputValue) => {
+                setInputColorValue(newInputValue);
+              }}
+              id="color-states-demo"
+              options={colors}
+              sx={{ width: 300 }}
+              renderInput={(params) => (
+                <TextField {...params} label="Color *" />
+              )}
+            />
+            {/*autocomplete component for dataseries */}
+            <Autocomplete
+              value={dataSeries}
+              onChange={(e: any, newValue: string | null) => {
+                setDataSeries(newValue);
+              }}
+              inputValue={inputDataSeriesValue}
+              onInputChange={(e, newInputValue) => {
+                setInputDataSeriesValue(newInputValue);
+              }}
+              id="color-states-demo"
+              options={dataseriesOption}
+              sx={{ width: 300 }}
+              renderInput={(params) => (
+                <TextField {...params} label="Dataseries *" />
+              )}
+            />
+            {/*textField for x and y axis */}
+            <Box sx={{ display: "flex", gap: 2 }}>
+              <TextField
+                label="X-axis name"
+                value={xAxis}
+                onChange={(e) => setXAxis(e.target.value)}
+                sx={{ width: 140 }}
+              />
+              <TextField
+                label="Y-axis name"
+                value={yAxis}
+                onChange={(e) => setYAxis(e.target.value)}
+                sx={{ width: 140 }}
+              />
+            </Box>
+            {/*textfield for text description */}
             <TextField
-              id="outlined-controlled"
-              label="Y-axis name"
-              value={yAxis}
-              onChange={(e: any) => {
-                setYAxis(e.target.value);
-              }}
-              sx={{ width: 144 }}
+              label="Text description"
+              value={textDescription}
+              onChange={(e) => setTextDescription(e.target.value)}
+              sx={{ width: 300 }}
             />
+
+            <Box sx={{ display: "flex", gap: 2, marginTop: 2 }}>
+              <Button onClick={cancleClick} variant="outlined">
+                Cancel
+              </Button>
+              <Button type="submit" variant="contained">
+                ADD CHART
+              </Button>
+            </Box>
           </Box>
-          {/*input field for text description*/}
-          <TextField
-            id="outlined-controlled"
-            label="Text description"
-            value={textDescription}
-            onChange={(e: any) => {
-              setTextDescription(e.target.value);
-            }}
-            sx={{ width: 300 }}
-          />
-          {/*cancel btn*/}
-          <Box>
-            <Button onClick={cancleClick}>Cancel</Button>
-            {/*add btn*/}
-            <Button type="submit">ADD CHART</Button>
-          </Box>
-        </Box>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </Box>
   );
 };
 
