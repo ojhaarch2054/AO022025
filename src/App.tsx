@@ -94,6 +94,7 @@ function App() {
           path="/chart/:id"
           element={<ChartView sensorData={sensorData} chartIndex={null} />}
         />
+        
       </Routes>
     </Router>
   );
