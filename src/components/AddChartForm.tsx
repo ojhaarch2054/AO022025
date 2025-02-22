@@ -7,82 +7,121 @@ import {
   Card,
   CardContent,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAppContext } from "./context/Context";
+import jsonDataToRead from "../dataSeries.json";
+
+//interface for data series
+interface DataSeries {
+  value: number;
+  date: string;
+}
+//interface for json data
+interface JsonData {
+  name: string;
+  dataseries: DataSeries[];
+}
+//interface for sensordata
+interface SensorData {
+  name: string;
+  chartType: string;
+  color: string;
+  dataseries: DataSeries[];
+  textDescription: string;
+  xAxis: string;
+  yAxis: string;
+}
 
 const AddChartForm = () => {
-  //use useNavigate
   const navigate = useNavigate();
-  //options for autocomplete
+  const { setSensorData, formData, setFormData } = useAppContext();
+  const [jsonData, setJsonData] = useState<JsonData[]>([]);
+
+  //fetch data from JSON file
+  useEffect(() => {
+    setJsonData(jsonDataToRead);
+  }, []);
+
   const options = ["Line", "Option 2"];
-  //option for colors
   const colors = ["Black", "Red", "Blue"];
-  //dataseries option
-  const dataseriesOption = ["Dataseries", "DataSeries1"];
-  //state for form data input
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-  });
-
-  //state for autocomplete value
-  const [value, setValue] = useState<string | null>(options[0]);
-  const [inputValue, setInputValue] = useState("");
-  //for colors
-  const [colorValue, setColorValue] = useState<string | null>(colors[0]);
-  const [inputColorValue, setInputColorValue] = useState("");
-  //for dataSeries
-  const [dataSeries, setDataSeries] = useState<string | null>(
-    dataseriesOption[0]
-  );
-  const [inputDataSeriesValue, setInputDataSeriesValue] = useState("");
-  //for text description
-  const [textDescription, setTextDescription] = useState<String>("");
-
-  //for axis
-  const [xAxis, setXAxis] = useState<string>("");
-  const [yAxis, setYAxis] = useState<string>("");
-  
+  const dataseriesOption = jsonData.map((data) => data.name);
 
   //handle form submission
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    //destructure formData to extract individual fields
+    const {
+      name,
+      chartType,
+      color,
+      dataseries,
+      textDescription,
+      xAxis,
+      yAxis,
+    } = formData;
+
+    //find the actual data series from jsonDataToRead
+    const selectedSeries =
+      jsonData.find((data) => data.name === dataseries)?.dataseries || [];
+
+    //check if all required fields are filled
     if (
-      !inputValue ||
-      !inputColorValue ||
-      !inputDataSeriesValue ||
+      !name ||
+      !chartType ||
+      !color ||
+      !dataseries ||
       !textDescription ||
       !xAxis ||
-      yAxis
+      !yAxis
     ) {
       alert("All Fields Are Required");
+      return;
     }
-    e.preventDefault();
-    console.log("Details Added");
+
+    const newData: SensorData = {
+      name,
+      chartType,
+      color,
+      dataseries: selectedSeries,
+      textDescription,
+      xAxis,
+      yAxis,
+    };
+
+    setSensorData((prev: any) => [...prev, newData]);
+
+    alert(`New data "${formData.name}" added`);
+    console.log("Details Added", newData);
+
+    //reset form fields
+    setFormData({
+      name: "",
+      chartType: "",
+      color: "",
+      dataseries: "",
+      textDescription: "",
+      xAxis: "",
+      yAxis: "",
+    });
+
     navigate("/");
   };
 
-  //handle input change for text field
-  const handleChange = (e: any) => {
+  //handle input change for text fields
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
-  //for cancelClick
-  const cancleClick = () => {
-    console.log("cancel btn clicked..");
+
+  //handle cancel button click
+  const cancelClick = () => {
     navigate("/");
   };
 
   return (
     <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        
-      }}
+      sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
     >
       <Card sx={{ minWidth: 320, padding: 3, boxShadow: 3 }}>
         <CardContent>
@@ -92,7 +131,7 @@ const AddChartForm = () => {
             sx={{ display: "flex", flexDirection: "column", gap: 2 }}
           >
             <Typography>Add Chart</Typography>
-            {/*text field for name input */}
+
             <TextField
               placeholder="Name *"
               name="name"
@@ -101,83 +140,75 @@ const AddChartForm = () => {
               sx={{ width: 300 }}
             />
 
-            {/*autocomplete component */}
+            {/*chart type */}
             <Autocomplete
-              value={value}
-              onChange={(e: any, newValue: string | null) => {
-                setValue(newValue);
-              }}
-              inputValue={inputValue}
-              onInputChange={(e, newInputValue) => {
-                setInputValue(newInputValue);
-              }}
-              id="controllable-states-demo"
+              value={formData.chartType}
+              onChange={(_, newValue) =>
+                setFormData((prev) => ({ ...prev, chartType: newValue || "" }))
+              }
               options={options}
               sx={{ width: 300 }}
               renderInput={(params) => (
-                <TextField {...params} label="Controllable *" />
+                <TextField {...params} label="Chart Type *" />
               )}
             />
 
-            {/*autocomplete component for color */}
+            {/*color picker */}
             <Autocomplete
-              value={colorValue}
-              onChange={(e: any, newValue: string | null) => {
-                setColorValue(newValue);
-              }}
-              inputValue={inputColorValue}
-              onInputChange={(e, newInputValue) => {
-                setInputColorValue(newInputValue);
-              }}
-              id="color-states-demo"
+              value={formData.color}
+              onChange={(_, newValue) =>
+                setFormData((prev) => ({ ...prev, color: newValue || "" }))
+              }
               options={colors}
               sx={{ width: 300 }}
               renderInput={(params) => (
                 <TextField {...params} label="Color *" />
               )}
             />
-            {/*autocomplete component for dataseries */}
+
+            {/*dataseries picker */}
             <Autocomplete
-              value={dataSeries}
-              onChange={(e: any, newValue: string | null) => {
-                setDataSeries(newValue);
-              }}
-              inputValue={inputDataSeriesValue}
-              onInputChange={(e, newInputValue) => {
-                setInputDataSeriesValue(newInputValue);
-              }}
-              id="color-states-demo"
+              value={formData.dataseries}
+              onChange={(_, newValue) =>
+                setFormData((prev) => ({ ...prev, dataseries: newValue || "" }))
+              }
               options={dataseriesOption}
               sx={{ width: 300 }}
               renderInput={(params) => (
                 <TextField {...params} label="Dataseries *" />
               )}
             />
-            {/*textField for x and y axis */}
+
+            {/*xaxis & yaxis */}
             <Box sx={{ display: "flex", gap: 2 }}>
               <TextField
                 label="X-axis name"
-                value={xAxis}
-                onChange={(e) => setXAxis(e.target.value)}
+                name="xAxis"
+                value={formData.xAxis}
+                onChange={handleChange}
                 sx={{ width: 140 }}
               />
               <TextField
                 label="Y-axis name"
-                value={yAxis}
-                onChange={(e) => setYAxis(e.target.value)}
+                name="yAxis"
+                value={formData.yAxis}
+                onChange={handleChange}
                 sx={{ width: 140 }}
               />
             </Box>
-            {/*textfield for text description */}
+
+            {/*text description */}
             <TextField
               label="Text description"
-              value={textDescription}
-              onChange={(e) => setTextDescription(e.target.value)}
+              name="textDescription"
+              value={formData.textDescription}
+              onChange={handleChange}
               sx={{ width: 300 }}
             />
 
+            {/*buttons*/}
             <Box sx={{ display: "flex", gap: 2, marginTop: 2 }}>
-              <Button onClick={cancleClick} variant="outlined">
+              <Button onClick={cancelClick} variant="outlined">
                 Cancel
               </Button>
               <Button type="submit" variant="contained">

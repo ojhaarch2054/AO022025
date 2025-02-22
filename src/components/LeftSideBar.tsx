@@ -78,7 +78,7 @@ const LeftSideBar: React.FC<LeftSideBarProps> = ({ sensorData }) => {
               key={i}
               onClick={() => handleChartClick(i)}
             >
-              {`Chart ${i + 1670 + 1}`}
+              {`Chart ${sensor.name , i}`}
               <ListItemIcon>
                 <MoreVertIcon
                   onClick={(e: any) => handleMenuIconClick(e, i)}

@@ -1,8 +1,7 @@
 import React, { createContext, useState, useContext, ReactNode } from "react";
 import { useMediaQuery } from "@mui/material";
 import { Sensor } from "../../interfaces/sensorData";
-import { useEffect } from "react";
-import sensorDataFromJson from "../../dataSeries.json"
+
 
 //define a type for the context value
 interface ContextValue {
@@ -19,7 +18,26 @@ interface ContextValue {
   setMenuChartIndex: React.Dispatch<React.SetStateAction<number | null>>;
   clickedChartIndex: number | null;
   setClickedChartIndex: React.Dispatch<React.SetStateAction<number | null>>;
-  sensorData: Sensor[]
+  sensorData: Sensor[];
+  setSensorData: React.Dispatch<React.SetStateAction<Sensor[]>>;
+  formData: {
+    name: string;
+    chartType: string;
+    color: string;
+    dataseries: string;
+    xAxis: string;
+    yAxis: string;
+    textDescription: string;
+  };
+  setFormData: React.Dispatch<React.SetStateAction<{
+    name: string;
+    chartType: string;
+    color: string;
+    dataseries: string;
+    xAxis: string;
+    yAxis: string;
+    textDescription: string;
+  }>>;
 }
 
 //create context with a default value
@@ -42,14 +60,18 @@ const ContextProvider: React.FC<ContextProviderProps> = ({ children }) => {
   const [clickedChartIndex, setClickedChartIndex] = useState<number | null>(
     null
   );
-  //state to store data
+  //state to store data from addChart
   const [sensorData, setSensorData] = useState<Sensor[]>([]);
-
-  //fetch data from json
-  useEffect(() => {
-    //set the value of sensorData
-    setSensorData(sensorDataFromJson);
-  }, []);
+  // State variable to store form data with initial values for each field
+  const [formData, setFormData] = useState({
+    name: '',
+    chartType: '',
+    color: '',
+    dataseries: '',
+    xAxis: '',
+    yAxis: '',
+    textDescription: ''
+  });
 
   return (
     <ContextApi.Provider
@@ -67,7 +89,10 @@ const ContextProvider: React.FC<ContextProviderProps> = ({ children }) => {
         setMenuChartIndex,
         clickedChartIndex,
         setClickedChartIndex,
-        sensorData
+        sensorData,
+        setSensorData,
+        formData,
+        setFormData
       }}
     >
       {children}
