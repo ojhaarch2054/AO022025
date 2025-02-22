@@ -6,6 +6,7 @@ import ChartView from "./components/ChartView";
 import { useState } from "react";
 import { Sensor } from "./interfaces/sensorData";
 import Error404Page from "./components/Error404Page";
+import Navbar from "./components/NavBar";
 
 function App() {
   //state to store data
@@ -89,7 +90,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LeftSideBar sensorData={sensorData} />} />
+      <Route path="/" element={<Navbar sensorData={sensorData} />} />
         <Route path="/add-chart" element={<AddChartForm />} />
         <Route
           path="/chart/:id"

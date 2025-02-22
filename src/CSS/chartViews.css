@@ -1,31 +1,36 @@
-.styled-p {
-  text-align: center;
-  font-size: 14px;
-  margin-top: 15px;
-}
-  
 .chart-box {
-  width: 100%;
-  max-width: 1200px;
-  padding: 20px;
-  background-color: white;
-  border-radius: 10px;
-  border: 2px solid #ddd;
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0.1, 0.1, 0.1, 0.1);
+  padding: 30px;
+  margin: 40px;
+  max-width: 1000px;
 }
-
 
 .chart-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
+
+.chart-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
 .date-picker {
   display: flex;
   align-items: center;
-  gap: 5px;
-  background-color: #fff;
-  padding: 5px;
-  border-radius: 5px;
+}
+
+.date-picker span {
+  margin: 0 10px;
+}
+
+.styled-p {
+  margin-top: 20px;
+  font-size: 1rem;
+  color: #666;
+  text-align: center;
 }

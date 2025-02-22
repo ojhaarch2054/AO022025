@@ -42,6 +42,7 @@ const AddChartForm = () => {
   //for axis
   const [xAxis, setXAxis] = useState<string>("");
   const [yAxis, setYAxis] = useState<string>("");
+  
 
   //handle form submission
   const handleSubmit = (e: any) => {
@@ -80,6 +81,7 @@ const AddChartForm = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        
       }}
     >
       <Card sx={{ minWidth: 320, padding: 3, boxShadow: 3 }}>

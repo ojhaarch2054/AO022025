@@ -1,18 +1,17 @@
+import { useNavigate } from "react-router-dom";
 import "../CSS/errorPage.css"
-import { useNavigate } from "react-router-dom"
-import Navbar from "./NavBar"
-
+import ErrorNav from "./ErrorNav";
 const Error404Page = () => {
-  const navigate = useNavigate()
+const navigate = useNavigate();
 
   //for home navigation
   const goHomeBtn = () => {
-    navigate("/")
-  }
-  
+    navigate("/");
+  };
+
   return (
     <div className="error-container">
-      <Navbar/>
+      <ErrorNav/>
       <div className="error-content">
         <div className="error-graphic">
           <h1 className="error-code">404</h1>
@@ -24,8 +23,7 @@ const Error404Page = () => {
         <button onClick={goHomeBtn} className="goHome-btnColor">GO HOME</button>
       </div>
     </div>
-   
   );
-}
+};
 
 export default Error404Page;
