@@ -7,6 +7,6 @@ export interface DataSeries {
   }
   //for sensor state
   export interface Sensor {
-    name: string;
-    dataseries: DataSeries[];
+      name: string;
+      dataseries: { value: number; date: string }[];
   }
