@@ -31,6 +31,10 @@ const AddChartForm = ({ sensorToEdit, onClose }: AddChartFormProps) => {
   const navigate = useNavigate();
   const { setSensorData, formData, setFormData} = useAppContext();
   const [jsonData, setJsonData] = useState<JsonData[]>([]);
+   //for error mesg
+   const [errorMsg, setErrorMsg] = useState<{
+    [key: string]: string;
+  }>({});
 
   //to fetch data from JSON file
   useEffect(() => {
@@ -60,6 +64,8 @@ const AddChartForm = ({ sensorToEdit, onClose }: AddChartFormProps) => {
   //handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    //clear old error msg
+    setErrorMsg({});
     //destructuring form data to extract value
     const {
       name,
@@ -75,19 +81,24 @@ const AddChartForm = ({ sensorToEdit, onClose }: AddChartFormProps) => {
     const selectedSeries =
       jsonData.find((data) => data.name === dataseries)?.dataseries || [];
 
-    //check if any required field is empty
-    if (
-      !name ||
-      !chartType ||
-      !color ||
-      !dataseries ||
-      !textDescription ||
-      !xAxis ||
-      !yAxis
-    ) {
-      alert("All Fields Are Required");
+       //obj to hold validation of error
+    const errors: { [key: string]: string } = {};
+
+    // Check if any required field is empty
+    if (!formData.name) errors.name = "Required *";
+    if (!formData.chartType) errors.chartType = "Required *";
+    if (!formData.color) errors.color = "Required *";
+    if (!formData.dataseries) errors.dataseries = "Required *";
+    if (!formData.textDescription) errors.textDescription = "Required *";
+    if (!formData.xAxis) errors.xAxis = "Required *";
+    if (!formData.yAxis) errors.yAxis = "Required *";
+
+    //if there are errors update the state and return
+    if (Object.keys(errors).length > 0) {
+      setErrorMsg(errors);
       return;
     }
+
     //create a new Sensor object with the provided data
     const newData: Sensor = {
       name,
@@ -160,8 +171,14 @@ const AddChartForm = ({ sensorToEdit, onClose }: AddChartFormProps) => {
               name="name"
               value={formData.name}
               onChange={handleChange}
+              error={!!errorMsg.name}
               sx={{ width: 300 }}
             />
+            {errorMsg.name && (
+              <Typography color="red" variant="caption">
+                {errorMsg.name}
+              </Typography>
+            )}
             {/*chart type*/}
             <Autocomplete
               value={formData.chartType}
@@ -171,9 +188,14 @@ const AddChartForm = ({ sensorToEdit, onClose }: AddChartFormProps) => {
               options={options}
               sx={{ width: 300 }}
               renderInput={(params) => (
-                <TextField {...params} placeholder="Chart Type *" />
+                <TextField {...params} placeholder="Chart Type *" error={!!errorMsg.chartType}/>
               )}
             />
+            {errorMsg.chartType && (
+              <Typography color="red" variant="caption">
+                {errorMsg.chartType}
+              </Typography>
+            )}
             {/*color picker*/}
             <Autocomplete
               value={formData.color}
@@ -183,9 +205,13 @@ const AddChartForm = ({ sensorToEdit, onClose }: AddChartFormProps) => {
               options={colors}
               sx={{ width: 300 }}
               renderInput={(params) => (
-                <TextField {...params} placeholder="Color *" />
+                <TextField {...params} placeholder="Color *" error={!!errorMsg.color} />
               )}
-            />
+            />{errorMsg.color && (
+              <Typography color="red" variant="caption">
+                {errorMsg.color}
+              </Typography>
+            )}
             {/*dataseries picker*/}
             <Autocomplete
               value={formData.dataseries}
@@ -195,9 +221,14 @@ const AddChartForm = ({ sensorToEdit, onClose }: AddChartFormProps) => {
               options={dataseriesOption}
               sx={{ width: 300 }}
               renderInput={(params) => (
-                <TextField {...params} placeholder="Dataseries *" />
+                <TextField {...params} placeholder="Dataseries *" error={!!errorMsg.dataseries} />
               )}
             />
+            {errorMsg.dataseries && (
+              <Typography color="red" variant="caption">
+                {errorMsg.dataseries}
+              </Typography>
+            )}
             {/*X-axis & Y-axis*/}
             <Box sx={{ display: "flex", gap: 2 }}>
               <TextField
@@ -206,15 +237,27 @@ const AddChartForm = ({ sensorToEdit, onClose }: AddChartFormProps) => {
                 value={formData.xAxis}
                 onChange={handleChange}
                 sx={{ width: 140 }}
+                error={!!errorMsg.xAxis}
               />
+              {errorMsg.xAxis && (
+                <Typography color="red" variant="caption">
+                  {errorMsg.xAxis}
+                </Typography>
+              )}
               <TextField
                 placeholder="Y-axis name"
                 name="yAxis"
                 value={formData.yAxis}
                 onChange={handleChange}
                 sx={{ width: 140 }}
+                error={!!errorMsg.yAxis}
               />
             </Box>
+            {errorMsg.yAxis && (
+                <Typography color="red" variant="caption">
+                  {errorMsg.yAxis}
+                </Typography>
+              )}
             {/*txt description*/}
             <TextField
               placeholder="Text description"
@@ -222,7 +265,13 @@ const AddChartForm = ({ sensorToEdit, onClose }: AddChartFormProps) => {
               value={formData.textDescription}
               onChange={handleChange}
               sx={{ width: 300 }}
+              error={!!errorMsg.textDescription}
             />
+            {errorMsg.textDescription && (
+              <Typography color="red" variant="caption">
+                {errorMsg.textDescription}
+              </Typography>
+            )}
             {/*cancel and add btn */}
             <Box sx={{ display: "flex", gap: 2, marginTop: 2 }}>
               <Button onClick={cancelClick} variant="outlined">
