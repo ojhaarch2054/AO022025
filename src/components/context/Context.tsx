@@ -2,7 +2,6 @@ import React, { createContext, useState, useContext, ReactNode } from "react";
 import { useMediaQuery } from "@mui/material";
 import { Sensor } from "../../interfaces/sensorData";
 
-
 //define a type for the context value
 interface ContextValue {
   isSmallScreen: boolean;

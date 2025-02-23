@@ -121,7 +121,7 @@ const AddChartForm = ({ sensorToEdit, onClose }: AddChartFormProps) => {
     } else {
       //add the new sensor data to the state
       setSensorData((prev: any) => [...prev, newData]);
-      alert(`New sensor "${formData.name}" added`);
+      console.log(`New sensor "${formData.name}" added`);
     }
 
     console.log("Details Added/Updated", newData);

@@ -18,7 +18,6 @@ import AddChartForm from "./AddChartForm";
 interface LeftSideBarProps {
   sensorData: Sensor[];
 }
-
 const LeftSideBar: React.FC<LeftSideBarProps> = ({ sensorData }) => {
   //destructuring context value
   const {
@@ -34,20 +33,17 @@ const LeftSideBar: React.FC<LeftSideBarProps> = ({ sensorData }) => {
   const [selectedSensor, setSelectedSensor] = useState<Sensor | null>(null);
   //to control whether the dialog is open or closed
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
   //to close the menu and reset its state
   const handleClose = () => {
     setAnchorEl(null);
     setMenuChartIndex(null);
   };
-
   //to handle click on the charts in the list
   const handleChartClick = (i: number) => {
     setChartClicked(true);
     setClickedChartIndex(i); //store the clicked chart index
     handleClose();
   };
-
   //to handle clicks on the menu icon
   const handleMenuIconClick = (
     event: React.MouseEvent<HTMLElement>,
@@ -58,7 +54,6 @@ const LeftSideBar: React.FC<LeftSideBarProps> = ({ sensorData }) => {
     setAnchorEl(event.currentTarget);
     setMenuChartIndex(index);
   };
-
   //to open the edit dialog for a selected sensor
   const handleEditItem = (sensor: Sensor) => {
     //set the selected sensor for editing
@@ -67,19 +62,16 @@ const LeftSideBar: React.FC<LeftSideBarProps> = ({ sensorData }) => {
     setIsDialogOpen(true);
     handleClose();
   };
-
   //to close the edit dialog
   const handleDialogClose = () => {
     setIsDialogOpen(false);
     setSelectedSensor(null);
   };
-
   //to handle the delete action
   const dltClick = () => {
     alert("Do you want to delete??");
     console.log("delete Icon clicked!!");
   };
-
   return (
     <>
       {/*list of sensors */}
