@@ -7,6 +7,11 @@ export interface DataSeries {
   }
   //for sensor state
   export interface Sensor {
-      name: string;
-      dataseries: { value: number; date: string }[];
+    name: string;
+    chartType: string;
+    color: string;
+    dataseries: DataSeries[];
+    textDescription: string;
+    xAxis: string;
+    yAxis: string;
   }

@@ -54,15 +54,19 @@ const ContextProvider: React.FC<ContextProviderProps> = ({ children }) => {
   const [searchTerm, setSearchTerm] = useState("");
   //state for the search dialog
   const [searchClicked, setSearchClicked] = useState(false);
+  //or track chart has been clicked or not
   const [chartClicked, setChartClicked] = useState(false);
+  //to store the html element that triggered the menu
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  //to store the index of the chart for which the menu is open
   const [menuChartIndex, setMenuChartIndex] = useState<number | null>(null);
+  //to store the index of the chart which is clicked
   const [clickedChartIndex, setClickedChartIndex] = useState<number | null>(
     null
   );
-  //state to store data from addChart
+  //to store data from addChart
   const [sensorData, setSensorData] = useState<Sensor[]>([]);
-  // State variable to store form data with initial values for each field
+  //o store form data with initial values for each field
   const [formData, setFormData] = useState({
     name: '',
     chartType: '',

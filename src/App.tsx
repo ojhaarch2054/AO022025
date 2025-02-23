@@ -11,13 +11,12 @@ function App() {
  sensorData
   } = useAppContext();
  
-
   return (
     <Router>
       <Routes>
       <Route path="/" element={<Navbar sensorData={sensorData} />} />
-        <Route path="/add-chart" element={<AddChartForm />} />
-        <Route
+      <Route path="/add-chart" element={<AddChartForm sensorToEdit={null} onClose={() => {}} />} />
+      <Route
           path="/chart/:id"
           element={<ChartView sensorData={sensorData} chartIndex={null} />}
         />
