@@ -2,12 +2,12 @@
 This app displays a list of visuals based on data from sensors. It uses a JSON file that contains the sensor data to create these visuals. The design of the app is based on a Figma prototype, which you should follow to build the user interface for different screens.
 
 ## Technologies and Tools
-○ React
-○ Typescript
-○ Hook Form
-○ React-router
-○ MUI
-○ Highcharts
+- **React**
+- **Typescript**
+- **Hook Form**
+- **React-router**
+- **MUI**
+- **Highcharts**
 
 ## Figma Design: https://www.figma.com/design/HYADor2o34z0ZkahzKRyBI/Frontend-test?node-id=13-2759&t=jGsq4iYl6sdAtSTi-0
 
